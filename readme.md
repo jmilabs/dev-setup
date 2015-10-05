@@ -19,7 +19,7 @@ In your terminal type, `bash <(curl -s https://raw.githubusercontent.com/thought
 * **Heroku Toolbelt** for interacting with the Heroku API
 * **Homebrew** for managing operating system libraries
 * **ImageMagick** for cropping and resizing images
-* **Node.js** and [NPM], for running apps and installing JavaScript packages
+* **Node.js** and **NPM**, for running apps and installing JavaScript packages
 * **Postgres** for storing relational data
 * **Qt** for headless JavaScript testing via Capybara Webkit
 * **Rbenv** for managing versions of Ruby
@@ -91,7 +91,8 @@ RVM is short for **Ruby Version Manager**. RVM makes it easy to install differen
 2. Close your terminal and then re-open it. Now, lets see if RVM was loaded properly: `type rvm | head -n 1`
 
 3. Now install Ruby with: 
-    ```rvm use ruby --install --default   
+    ```bash
+    rvm use ruby --install --default   
     ruby -v
     ```
 
