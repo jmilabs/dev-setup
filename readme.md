@@ -55,7 +55,7 @@ We can then install optional componenets
 
 ***
 
-Throughout this guide we will be interacting with the Terminal application on OS X. To access terminal press <kbd>⌘</kbd>`+`<kbd>space</kbd> to open Spotlight search and type `terminal`.
+Throughout this guide we will be interacting with the Terminal application on OS X. To access terminal press <kbd>⌘</kbd>+<kbd>space</kbd> to open Spotlight search and type `terminal`.
 
 ## Homebrew
 
@@ -161,6 +161,6 @@ Sublime Text is a sophisticated text editor for code, markup and prose. You'll l
 import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
 ~~~
 
-4. Verify you can install packages by accessing the command palette, <kbd>⌘</kbd>`+`<kbd>Shift</kbd>`+`<kbd>P</kbd>
+4. Verify you can install packages by accessing the command palette, <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
 
 
