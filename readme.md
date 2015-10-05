@@ -118,9 +118,9 @@ Ruby on Rails® is an open-source web framework that’s optimized for programme
 
 **Recommended Gems**
 
-* **Bundler** Bundler provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed. 
-* **Foreman** Foreman is a complete lifecycle management tool for physical and virtual servers. 
-* **RSpec** Behaviour Driven Development for Ruby.
+* **Bundler** provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed. 
+* **Foreman** is a complete lifecycle management tool for physical and virtual servers. 
+* **RSpec** provides behaviour driven development for Ruby.
 
 ~~~~
 gem install bundler
