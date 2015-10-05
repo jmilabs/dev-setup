@@ -38,8 +38,9 @@ The goal is to setup and install the following components:
 * [Homebrew](##Homebrew)
 * [git](##Git)
 * [Ruby](##RVM)
+* [Rails](##Rails)
 * Postgres
-* Rails
+
 
 We can then install optional componenets 
 
@@ -58,7 +59,8 @@ Throughout this guide we will be interacting with the Terminal application on OS
 
 Homebrew installs the stuff you need that Apple didn’t.
 
-1. In your terminal type: `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+1. In your terminal type: 
+`ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 
 2. During the installation, your computer will inform you that Xcode command line tools is required. Follow the prompt to install the necessary dependencies. *If Xcode command line tools does not install by default type* `xcode-select --install`  
 
@@ -101,6 +103,10 @@ RVM is short for **Ruby Version Manager**. RVM makes it easy to install differen
 Ruby on Rails® is an open-source web framework that’s optimized for programmer happiness and sustainable productivity. It lets you write beautiful code by favoring convention over configuration.
 
 1. In your terminal type, `gem install rails --no-ri --no-rdoc`.
+
+2. To verify your installation, type `rails --version`.
+
+   Approximate expected result: `Rails 4.2.4`.
 
 
 
