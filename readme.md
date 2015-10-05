@@ -40,7 +40,7 @@ bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac)
 
 The goal is to setup and install the following components: 
  
-* [Homebrew](##Homebrew)
+* [Homebrew](homebrew)
 * [git](##Git)
 * [Ruby](##RVM)
 * [Rails](##Rails)
@@ -58,7 +58,7 @@ We can then install optional componenets
 
 Throughout this guide we will be interacting with the Terminal application on OS X. To access terminal press <kbd>⌘</kbd>+<kbd>space</kbd> to open Spotlight search and type `terminal`.
 
-## Homebrew
+## Homebrew [homebrew]
 
 Homebrew installs the stuff you need that Apple didn’t.
 
