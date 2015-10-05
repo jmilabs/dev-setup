@@ -96,6 +96,12 @@ RVM is short for **Ruby Version Manager**. RVM makes it easy to install differen
     ruby -v
     ```
 
+## Rails
+
+Ruby on Rails® is an open-source web framework that’s optimized for programmer happiness and sustainable productivity. It lets you write beautiful code by favoring convention over configuration.
+
+1. In your terminal type, `gem install rails --no-ri --no-rdoc`.
+
 
 
 
