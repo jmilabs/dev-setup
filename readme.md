@@ -115,6 +115,26 @@ Ruby on Rails® is an open-source web framework that’s optimized for programme
 
    Approximate expected result: `Rails 4.2.4`.
 
+
+**Recommended Gems**
+
+* **Bundler** Bundler provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed. 
+* **Foreman** Foreman is a complete lifecycle management tool for physical and virtual servers. 
+* **RSpec** Behaviour Driven Development for Ruby.
+
+~~~~
+gem install bundler
+gem install foreman
+gem install rspec
+~~~
+
+## Bundler
+
+Bundler provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed. 
+
+1. In your terminal type, `gem install bundler`.
+
+
 ## PostgreSQL
 
 PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness.
