@@ -8,7 +8,11 @@ This guide assumes that you will be setting up your environment on a new OS X in
 
 The **thoughtbot** team has a script that will automagically turn your vanilla OS X install into an awesome web development machine. 
 
-In your terminal type, `bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac)`. 
+In your terminal type, 
+
+~~~bash
+bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) 
+~~~
 
 ### What it sets up
 
@@ -39,17 +43,15 @@ The goal is to setup and install the following components:
 * [git](##Git)
 * [Ruby](##RVM)
 * [Rails](##Rails)
-* Postgres
-
+* [PostgreSQL](##PostgreSQL)
 
 We can then install optional componenets 
 
-* iTerm
-* zsh
+* zsh 
 * oh my zsh
 * tmux
 * Vim
-* Sublime Text
+* Sublime Text 2
 
 ***
 
@@ -107,6 +109,15 @@ Ruby on Rails® is an open-source web framework that’s optimized for programme
 2. To verify your installation, type `rails --version`.
 
    Approximate expected result: `Rails 4.2.4`.
+
+## PostgreSQL
+
+PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness.
+
+1. In your terminal type, `brew install postgresql`.
+
+2. To verify your installation, type `brew list | grep "postgresql"`. You should see postgresql as an output. 
+
 
 
 
