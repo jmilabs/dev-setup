@@ -63,7 +63,9 @@ Throughout this guide we will be interacting with the Terminal application on OS
 Homebrew installs the stuff you need that Apple didn’t.
 
 1. In your terminal type: 
-`ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+~~~
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+~~~
 
 2. During the installation, your computer will inform you that Xcode command line tools is required. Follow the prompt to install the necessary dependencies. 
 
