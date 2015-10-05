@@ -11,6 +11,7 @@ The **thoughtbot** team has a script that will automagically turn your vanilla O
 In your terminal type, 
 
 ~~~bash
+bash <(curl https://raw.githubusercontent.com/bwittenbrook3/dev-setup/master/.laptop.local > .laptop.local)
 bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) 
 ~~~
 
