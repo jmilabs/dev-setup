@@ -93,11 +93,11 @@ RVM is short for **Ruby Version Manager**. RVM makes it easy to install differen
 
 2. Close your terminal and then re-open it. Now, lets see if RVM was loaded properly: `type rvm | head -n 1`
 
-3. Now install Ruby with: 
-    ```bash
-    rvm use ruby --install --default   
-    ruby -v
-    ```
+3. Now install Ruby with: `rvm use ruby --install --default`.
+
+4. To verify your installation, type `ruby -v`.  
+
+   Approximate expected results: `ruby 2.2.1`.
 
 ## Rails
 
@@ -148,6 +148,8 @@ Zsh has  over one hundred themes now bundled. Most of them have [screenshots](ht
 
 
 1. Download Sublime Text 2 [here](http://www.sublimetext.com/2). 
+
+2. Open Sublime and access the console, `ctrl+\`` or `View > Show Console`. 
 
 
 
