@@ -181,7 +181,7 @@ Sublime Text is a sophisticated text editor for code, markup and prose. You'll l
 
 1. Download Sublime Text 2 [here](http://www.sublimetext.com/2). 
 
-2. Open Sublime and access the console, ``ctrl+`` or `View > Show Console`. 
+2. Open Sublime and access the console, <kbd>ctrl</kbd> + <kbd>\`</kbd> or `View > Show Console`. 
 
 3. Paste the following into the Sublime console:
 
