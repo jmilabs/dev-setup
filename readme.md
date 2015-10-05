@@ -50,7 +50,7 @@ We can then install optional componenets
 * [zsh](##zsh)
 * [oh my zsh](##oh-my-zsh)
 * [tmux](##tmux)
-* Sublime Text 2
+* [Sublime Text 2](##Sublime)
 
 ***
 
@@ -140,12 +140,15 @@ Zsh has  over one hundred themes now bundled. Most of them have [screenshots](ht
 
 ## tmux
 
+Tmux lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal.
+
 1. In your terminal type, `brew install tmux`.
 
 2. To verify your installation, type `brew list | grep "zsh"`. You should see `tmux` as an output. 
 
 ## Sublime Text 2 
 
+Sublime Text is a sophisticated text editor for code, markup and prose. You'll love the slick user interface, extraordinary features and amazing performance.
 
 1. Download Sublime Text 2 [here](http://www.sublimetext.com/2). 
 
