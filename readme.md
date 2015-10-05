@@ -128,13 +128,6 @@ gem install foreman
 gem install rspec
 ~~~
 
-## Bundler
-
-Bundler provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed. 
-
-1. In your terminal type, `gem install bundler`.
-
-
 ## PostgreSQL
 
 PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness.
