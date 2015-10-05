@@ -47,10 +47,9 @@ The goal is to setup and install the following components:
 
 We can then install optional componenets 
 
-* zsh 
-* oh my zsh
-* tmux
-* Vim
+* [zsh](##zsh)
+* [oh my zsh](##oh-my-zsh)
+* [tmux](##tmux)
 * Sublime Text 2
 
 ***
@@ -116,11 +115,39 @@ PostgreSQL is a powerful, open source object-relational database system. It has 
 
 1. In your terminal type, `brew install postgresql`.
 
-2. To verify your installation, type `brew list | grep "postgresql"`. You should see postgresql as an output. 
+2. To verify your installation, type `brew list | grep "postgresql"`. You should see `postgresql` as an output. 
+
+## zsh
+
+Zsh is a shell designed for interactive use, although it is also a powerful scripting language.
+
+1. In your terminal type, `brew install zsh`. 
+
+2. To verify your installation, type `brew list | grep "zsh"`. You should see `zsh` as an output. 
+
+## oh-my-zsh
+
+Oh My Zsh is an open source, community-driven framework for managing your zsh configuration. 
+
+1. In your terminal type,
+~~~
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+~~~
+
+**Themes**
+
+Zsh has  over one hundred themes now bundled. Most of them have [screenshots](https://wiki.github.com/robbyrussell/oh-my-zsh/themes) on the wiki. Check them out!
+
+## tmux
+
+1. In your terminal type, `brew install tmux`.
+
+2. To verify your installation, type `brew list | grep "zsh"`. You should see `tmux` as an output. 
+
+## Sublime Text 2 
 
 
-
-
+1. Download Sublime Text 2 [here](http://www.sublimetext.com/2). 
 
 
 
