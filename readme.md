@@ -45,6 +45,7 @@ The goal is to setup and install the following components:
 * [Ruby](##RVM)
 * [Rails](##Rails)
 * [PostgreSQL](##PostgreSQL)
+* [Node.js & NPM](##Node)
 
 We can then install optional componenets 
 
@@ -119,6 +120,16 @@ PostgreSQL is a powerful, open source object-relational database system. It has 
 1. In your terminal type, `brew install postgresql`.
 
 2. To verify your installation, type `brew list | grep "postgresql"`. You should see `postgresql` as an output. 
+
+## Node.js & NPM
+
+Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world.
+
+1. In your terminal type, `brew install node`.
+
+2. To verify your installation, type `node -v` and `npm -v`. 
+
+   Approximate expected results: `v4.1.x` and `2.14.x` respectively.
 
 ## zsh
 
