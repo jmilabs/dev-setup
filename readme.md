@@ -40,19 +40,19 @@ bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac)
 
 The goal is to setup and install the following components: 
  
-* [Homebrew](## Homebrew)
-* [git](##Git)
-* [Ruby](##RVM)
-* [Rails](##Rails)
-* [PostgreSQL](##PostgreSQL)
-* [Node.js & NPM](##Node)
+* [Homebrew](#homebrew)
+* [git](#git)
+* [Ruby](#ruby)
+* [Rails](#rvm-and-ruby)
+* [PostgreSQL](#postgresql)
+* [Node.js & NPM](#nodejs--npm)
 
 We can then install optional componenets 
 
-* [zsh](##zsh)
-* [oh my zsh](##oh-my-zsh)
-* [tmux](##tmux)
-* [Sublime Text 2](##Sublime)
+* [zsh](#zsh)
+* [oh my zsh](#oh-my-zsh)
+* [tmux](#tmux)
+* [Sublime Text 2](#sublime-text-2)
 
 ***
 
