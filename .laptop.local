@@ -1,0 +1,35 @@
+#!/bin/sh
+brew_cask_expand_alias() {
+  brew cask info "$1" 2>/dev/null | head -1 | awk '{gsub(/:/, ""); print $1}'
+}
+
+brew_cask_is_installed() {
+  local NAME=$(brew_cask_expand_alias "$1")
+  brew cask list -1 | grep -Fqx "$NAME"
+}
+
+brew_cask_install() {
+  if ! brew_cask_is_installed "$1"; then
+    brew cask install "$@"
+  fi
+}
+
+brew_cask_install_or_upgrade() {
+  if brew_cask_is_installed "$1"; then
+    echo "$1 is already installed, brew cask upgrade is not yet implemented"
+  else
+    brew cask install "$@"
+  fi
+}
+
+brew tap caskroom/cask
+brew_install_or_upgrade 'brew-cask'
+
+brew cask install google-drive
+brew cask install google-chrome
+brew cask install hipchat
+brew cask install sublime-text
+
+gem_install_or_update 'rails'
+gem_install_or_update 'rspec'
+
