@@ -63,7 +63,9 @@ Homebrew installs the stuff you need that Apple didn’t.
 1. In your terminal type: 
 `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 
-2. During the installation, your computer will inform you that Xcode command line tools is required. Follow the prompt to install the necessary dependencies. *If Xcode command line tools does not install by default type* `xcode-select --install`  
+2. During the installation, your computer will inform you that Xcode command line tools is required. Follow the prompt to install the necessary dependencies. 
+
+*If Xcode command line tools does not install by default type* `xcode-select --install`  
 
 3. To verify the installation of homebrew was successful type: `brew doctor`. You should see something the resulting output: `Your system is ready to brew.`
 
@@ -144,7 +146,7 @@ Tmux lets you switch easily between several programs in one terminal, detach the
 
 1. In your terminal type, `brew install tmux`.
 
-2. To verify your installation, type `brew list | grep "zsh"`. You should see `tmux` as an output. 
+2. To verify your installation, type `brew list | grep "tmux"`. You should see `tmux` as an output. 
 
 ## Sublime Text 2 
 
@@ -160,6 +162,7 @@ Sublime Text is a sophisticated text editor for code, markup and prose. You'll l
 import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
 ~~~
 
-4. Verify you can install packages by accessing the command palette, <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
+4. Verify you can install packages by accessing the command palette, <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>. In the Command Palette, you should now be able to use `Package Control: Install Package`. 
 
+*You can find a list of available packages [here](https://packagecontrol.io/browse).*
 
