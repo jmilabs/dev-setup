@@ -4,38 +4,6 @@ This document will guide you through the steps necessary to setting up a develop
 
 This guide assumes that you will be setting up your environment on a new OS X installation (10.10+). 
 
-## Easy Buttton 
-
-The **thoughtbot** team has a script that will automagically turn your vanilla OS X install into an awesome web development machine. (If you using the automagical method, you will still need to follow the instructions for Sublime-Text)  
-
-In your terminal type, 
-
-~~~bash
-bash <(curl https://raw.githubusercontent.com/bwittenbrook3/dev-setup/master/.laptop.local > .laptop.local)
-bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) 
-~~~
-
-### What it sets up
-
-* **Bundler** for managing Ruby libraries
-* **Exuberant Ctags** for indexing files for vim tab completion
-* **Foreman** for managing web processes
-* **hub** for interacting with the GitHub API
-* **Heroku Toolbelt** for interacting with the Heroku API
-* **Homebrew** for managing operating system libraries
-* **ImageMagick** for cropping and resizing images
-* **Node.js** and **NPM**, for running apps and installing JavaScript packages
-* **Postgres** for storing relational data
-* **Qt** for headless JavaScript testing via Capybara Webkit
-* **Rbenv** for managing versions of Ruby
-* **RCM** for managing company and personal dotfiles
-* **Redis** for storing key-value data
-* **Ruby Build** for installing Rubies
-* **Ruby** stable for writing general-purpose code
-* **The Silver Searcher** for finding things in files
-* **Tmux** for saving project state and switching between projects
-* **Zsh** as your shell
-
 ## Outline
 
 The goal is to setup and install the following components: 
@@ -192,4 +160,39 @@ import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc5
 4. Verify you can install packages by accessing the command palette, <kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>. In the Command Palette, you should now be able to use `Package Control: Install Package`. 
 
 *You can find a list of available packages [here](https://packagecontrol.io/browse).*
+
+
+## Easy Buttton 
+
+*If you have a brand new Mac, the following script should set up all the above for you!*
+
+The **thoughtbot** team has a script that will automagically turn your vanilla OS X install into an awesome web development machine. (If you using the automagical method, you will still need to follow the instructions for Sublime-Text)  
+
+In your terminal type, 
+
+~~~bash
+bash <(curl https://raw.githubusercontent.com/bwittenbrook3/dev-setup/master/.laptop.local > .laptop.local)
+bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac) 
+~~~
+
+### What it sets up
+
+* **Bundler** for managing Ruby libraries
+* **Exuberant Ctags** for indexing files for vim tab completion
+* **Foreman** for managing web processes
+* **hub** for interacting with the GitHub API
+* **Heroku Toolbelt** for interacting with the Heroku API
+* **Homebrew** for managing operating system libraries
+* **ImageMagick** for cropping and resizing images
+* **Node.js** and **NPM**, for running apps and installing JavaScript packages
+* **Postgres** for storing relational data
+* **Qt** for headless JavaScript testing via Capybara Webkit
+* **Rbenv** for managing versions of Ruby
+* **RCM** for managing company and personal dotfiles
+* **Redis** for storing key-value data
+* **Ruby Build** for installing Rubies
+* **Ruby** stable for writing general-purpose code
+* **The Silver Searcher** for finding things in files
+* **Tmux** for saving project state and switching between projects
+* **Zsh** as your shell
 
