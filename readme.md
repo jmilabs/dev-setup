@@ -59,7 +59,7 @@ Now we will configure git,
 
 3. To verify your configuration type: `git config -l`.
 
-Since some of the team's repos utilize Github's large file store we need to install git lfs.
+Since some of the team's repos utilize Github's large file store we need to install **git lfs**.
 
 1. In your terminal type, `brew install git-lfs`. 
 
