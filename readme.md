@@ -122,7 +122,7 @@ Ruby on Rails® is an open-source web framework that’s optimized for programme
 * **Foreman** is a complete lifecycle management tool for physical and virtual servers. 
 * **RSpec** provides behaviour driven development for Ruby.
 
-~~~~
+~~~
 gem install bundler
 gem install foreman
 gem install rspec
