@@ -59,6 +59,12 @@ Now we will configure git,
 
 3. To verify your configuration type: `git config -l`.
 
+Since some of the team's repos utilize Github's large file store we need to install git lfs.
+
+1. In your terminal type, `brew install git-lfs`. 
+
+2. To verify your installation, type `brew list | grep "git-lfs"`. You should see `git-lfs` as an output. 
+
 ## RVM and Ruby
 
 RVM is short for **Ruby Version Manager**. RVM makes it easy to install different versions of Ruby on your computer and manage them as well
