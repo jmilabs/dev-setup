@@ -6,7 +6,7 @@ This guide assumes that you will be setting up your environment on a new OS X in
 
 ## Easy Buttton 
 
-The **thoughtbot** team has a script that will automagically turn your vanilla OS X install into an awesome web development machine. 
+The **thoughtbot** team has a script that will automagically turn your vanilla OS X install into an awesome web development machine. (If you using the automagical method, you will still need to follow the instructions for Sublime-Text)  
 
 In your terminal type, 
 
