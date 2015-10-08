@@ -38,6 +38,8 @@ In order to perform this testing, **JMI Labs** works with hospitals around the w
 
 We use this wide range of isolates to provide our clients with a normalized frequency distribution of all MIC results for a particular drug / organism combination. Such results look similar to the following table:
 
+* Todo Add description of breakpoints and authorities
+
 <img src="images/staphylococcus_aureus_fd.png" alt="Drawing" width="600px" /> 
 
 ## Step 1: Determine which isolates to include in the report
@@ -158,3 +160,60 @@ isolate_filter.setAttributeFilter( year: { include: [ 2014 ] } )
 <hr />
 
 **Calculate Frequency Distributions**
+
+In order to calculate the frequency distribution of MIC results for all isolates matched by the `isolate_filter`, we need to indicate which 
+drugs and breakpoint authorities to include in the analysis:
+
+_Primary Drug Example_
+
+```
+primary_drugs = [
+  "Ceftazidime",
+  "Ceftriaxone",
+  "Cefepime",
+  "Oxacillin",
+  "Penicillin",
+  "Ampicillin",
+  "AmoxClav",
+  "AmpSulb",
+  "PipTazo",
+  "Meropenem",
+  "Aztreonam",
+  "Erythromycin",
+  "Azithromycin",
+  "Clarithromycin",
+  "Clindamycin",
+  "Ciprofloxacin",
+  "Levofloxacin",
+  "Gentamicin",
+  "Amikacin",
+  "TrimSulfa",
+  "Teicoplanin",
+  "Tetracycline",
+  "Tigecycline",
+  "Linezolid",
+  "Vancomycin",
+  "Daptomycin",
+  "Colistin"
+]
+```
+
+_Breakpoint Authorities Example_
+
+```
+breakpoint_authorities = [
+  { authority: 'CLSI', publication: '2015' },
+  { authority: 'EUCAST', publication: '2015' }
+]
+```
+
+Now that we have the drugs and breakpoint_authorities defined, we can calculate the frequency distribution. 
+
+```
+isolate_filter.calculateFrequencyDistributions(
+  primary_drugs,
+  breakpoint_authorities
+)
+```
+
+The frequency distribution results are stored within the `isolate_filter.frequency_distribution` instance variable.
