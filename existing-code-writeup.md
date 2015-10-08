@@ -18,15 +18,12 @@
 
 ## Minimum Inhibitory Concentration 
 
-In microbiology, **minimum inhibitory concentration (MIC)** is the lowest concentration of an antimicrobial that will inhibit the visible growth of a microorganism after overnight incubation. At **JMI Labs**, we several different kinds of tests to identify the MIC for a particular drug and organism combination. These tests include:
-  * MIC Panel
-  * E-Test
-  * Auger Panel 
-  * Disk Diffusion
+In microbiology, **Minimum Inhibitory Concentration (MIC)** is the lowest concentration of an antimicrobial that will inhibit the visible growth of a microorganism after overnight incubation. At **JMI Labs**, we several different kinds of tests to identify the MIC for a particular drug and organism combination. These tests include:
+  * **MIC Panel** ![MIC Panel](/images/mic_panel.png)
+  * **E-Test** ![MIC Panel](/images/e_test.png)
+  * **Agar Dilution** ![MIC Panel](/images/agar_dilution.png)
+  * **Disk Diffusion** ![MIC Panel](/images/disk_diffusion.png)
 
 In order to perform this testing, **JMI Labs** works with hospitals around the world to get many different samples of an organism, these are called isolates. Within our labs, we have tens of thousands of different organisms each with unique properties. We use this wide range of isolates to provide our clients with a normalized frequency distribution of all MIC results for a particular drug / organism combination. 
-
-** MIC Panel 
-![MIC Panel](/images/mic_panel.png)
 
 ## Step 1: Determine which isolates to include in the report
