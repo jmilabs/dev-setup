@@ -218,7 +218,7 @@ The frequency distribution results are stored within the `isolate_filter.frequen
 
 #### Step 1. Get the results of the MIC testing for each drug / organism combination, _only_ where the isolates of the test match the filtering criteria. 
 
-_Example_
+_Example SQL Query_
 
 ```
 select
@@ -249,11 +249,27 @@ d.name,
 vmr.mic,
 vmr.edge
 ```
-_Example Output_
 
-| drug | mic | edge | frequency |
-| ____ | ___ | ____ | _________ |
-| AmoxClav | 1.000000 | -1 | 3865 |
+To ensure that only the correct isolates are included in the **mic frequency count**, `isolate_filter.rb` a where clause is generated based on the filtered attributes.
+
+For more information see the code docs:
+
+* [IsolateFilter#getWhereClause](doc/IsolateFilter.html#getWhereClause-instance_method)
+
+```
+where
+  1 = 1
+  and vmr.drug_id in ( 1001 /* Amikacin */,1002 /* AmoxClav */, ... )
+  and i.surveillance_year in ( 2014 )
+  and i.organism_code in ( 'SA' )
+  and s.country in ( 'USA' )
+```
+
+_Example Results_
+
+| drug | mic | edge | frequency |          
+| --- | --- | :---: | --- |      
+| AmoxClav | 1.000000 | -1 | 3865 |    
 | AmoxClav | 2.000000| 0 | 104 |
 | AmoxClav | 4.000000| 0 | 142 |
 | AmoxClav | 8.000000| 0 | 685 |
@@ -263,6 +279,3 @@ _Example Output_
 | Vancomycin | 0.500000 | 0 | 1599 |
 | Vancomycin | 1.000000 | 0 | 5779 |
 | Vancomycin | 2.000000 | 0 | 64 |
-
-
-
