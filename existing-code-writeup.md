@@ -23,22 +23,22 @@ In microbiology, **Minimum Inhibitory Concentration (MIC)** is the lowest concen
 
   * **MIC Panel** 
   	 <br />
-  	 <img src="images/mic_panel.png" alt="Drawing" style="width: 300px;"/>
+  	 <img src="images/mic_panel.png" alt="Drawing" width="400px"/>
   * **E-Test** 
     <br />
-  	 <img src="images/e_test.png" alt="Drawing" style="width: 300px;"/>
+  	 <img src="images/e_test.png" alt="Drawing" width="400px"/>
   * **Agar Dilution** 
     <br />
-  	 <img src="images/agar_dilution.png" alt="Drawing" style="width: 300px;"/>
+  	 <img src="images/agar_dilution.png" alt="Drawing" width="400px"/>
   * **Disk Diffusion** 
     <br />
-  	 <img src="images/disk_diffusion.png" alt="Drawing" style="width: 300px;"/>
+  	 <img src="images/disk_diffusion.png" alt="Drawing" width="400px"/>
 
 In order to perform this testing, **JMI Labs** works with hospitals around the world to get many different samples of an organism, these are called isolates. Within our labs, we have tens of thousands of different organisms each with unique properties. 
 
 We use this wide range of isolates to provide our clients with a normalized frequency distribution of all MIC results for a particular drug / organism combination. Such results look similar to the following table:
 
-<img src="images/staphylococcus_aureus_fd.png" alt="Drawing" /> 
+<img src="images/staphylococcus_aureus_fd.png" alt="Drawing" width="600px" /> 
 
 ## Step 1: Determine which isolates to include in the report
 
