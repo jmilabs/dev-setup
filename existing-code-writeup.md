@@ -250,6 +250,23 @@ vmr.mic,
 vmr.edge
 ```
 
+_Example Results_
+
+| drug | mic | edge | frequency |          
+| --- | --- | :---: | --- |      
+| AmoxClav | 1.000000 | -1 | 3865 |    
+| AmoxClav | 2.000000| 0 | 104 |
+| AmoxClav | 4.000000| 0 | 142 |
+| AmoxClav | 8.000000| 0 | 685 |
+| AmoxClav | 8.000000| 1 | 2656 |
+| ... | ... | ... | ... |
+| Vancomycin | 0.250000 | 0 | 11 |
+| Vancomycin | 0.500000 | 0 | 1599 |
+| Vancomycin | 1.000000 | 0 | 5779 |
+| Vancomycin | 2.000000 | 0 | 64 |
+
+<hr />
+
 To ensure that only the correct isolates are included in the **mic frequency count**, `isolate_filter.rb` a where clause is generated based on the filtered attributes.
 
 For more information see the code docs:
@@ -265,17 +282,169 @@ where
   and s.country in ( 'USA' )
 ```
 
+The only **isolate attribute filters** that are not incuded by the `#getWhereClause` method are the following:
+
+* `:category_value` - [IsolateFilter#addCategoryValueTables](doc/IsolateFilter.html#addCategoryValueTables-instance_method)
+* `:reacts_like_to` - [IsolateFilter#addReactsLikeTo](doc/IsolateFilter.html#addReactsLikeTo-instance_method)
+* `:drug_dilution_criteria` - [IsolateFilter#addDrugDilutionCriteria](doc/IsolateFilter.html#addDrugDilutionCriteria-instance_method)
+* `:dilutions_differ_by` - [IsolateFilter#addDilutionsDifferBy](doc/IsolateFilter.html#addDilutionsDifferBy-instance_method)
+
+<hr />
+
+Now that we have a the mic result frequency count for all drug / isolate combinations, we need to create a distribution frequency for each drug for this filter.
+
+```
+SQLUtil::getConnection.exec( query ).each{ | row |
+      fd_key = {
+        filters: @filters,
+        drug:
+        row[ "drug" ],
+        group_by: @group_by,
+        group_by_values: {}
+      }
+      @group_by.each{ | k |
+        fd_key[ :group_by_values ][ k ] = row[ getBareColumnName( k ) ]
+      }
+      @frequency_distributions[ fd_key ] ||=
+        FrequencyDistribution.new( fd_key )
+      @frequency_distributions[ fd_key ].addUnnormalizedDilutionFrequency(
+        row[ "mic" ].to_f,
+        row[ "edge" ].to_i,
+        row[ "frequency" ].to_i
+      )
+    }
+```
+
+#### Step 2. Get a count of organisms included in each frequency distribution
+
+_Example SQL Query_
+
+```
+select
+d.name as drug,
+i.organism_code as organism_code,
+count(1) as frequency
+from
+ceftaroline_validated_mic_results vmr
+inner join ceftaroline_isolates i on i.id = vmr.isolate_id
+inner join organisms o on i.organism_code = o.organism_code
+inner join drugs d on vmr.drug_id = d.id
+inner join sites s on i.site_code = s.site_code
+left outer join us_census_regions uscr on
+s.state_province = uscr.state_abbreviation
+where
+  1 = 1
+  and vmr.drug_id in ( 1001 /* Amikacin */,1002 /* AmoxClav */, ...)
+  and i.surveillance_year in ( 2014 )
+  and i.organism_code in ( 'SA' )
+  and s.country in ( 'USA' )
+group by
+d.name,
+i.organism_code
+order by
+d.name,
+i.organism_code
+```
+
 _Example Results_
 
-| drug | mic | edge | frequency |          
-| --- | --- | :---: | --- |      
-| AmoxClav | 1.000000 | -1 | 3865 |    
-| AmoxClav | 2.000000| 0 | 104 |
-| AmoxClav | 4.000000| 0 | 142 |
-| AmoxClav | 8.000000| 0 | 685 |
-| AmoxClav | 8.000000| 1 | 2656 |
-| ... | ... | ... | ... |
-| Vancomycin | 0.250000 | 0 | 11 |
-| Vancomycin | 0.500000 | 0 | 1599 |
-| Vancomycin | 1.000000 | 0 | 5779 |
-| Vancomycin | 2.000000 | 0 | 64 |
+
+| drug | organism_code | frequency |          
+| --- | --- | --- |   
+| AmoxClav | SA | 7452 |
+| ... | ... | ... |
+| Vancomycin | SA | 7453 |
+
+Now we add the isolate counts to each frequency distribution.
+
+```
+SQLUtil::getConnection.exec( query ).each{ | row |
+  fd_key = {
+    filters: @filters,
+    drug: row[ "drug" ],
+    group_by: @group_by,
+    group_by_values: {}
+  }
+  @group_by.each{ | k |
+    fd_key[ :group_by_values ][ k ] = row[ getBareColumnName( k ) ]
+  }
+  if ( @frequency_distributions[ fd_key ].nil? )
+    throw "can't find frequency distribution for #{ fd_key }"
+  end
+  @frequency_distributions[ fd_key ].addOrganismCodeFrequency(
+    row[ "organism_code" ],
+    row[ "frequency" ].to_i
+  )
+}
+```
+
+#### Step 3. Retrieve drug reactions (resistance) counts
+
+This is done by calling the `IsolateFilter#calculateDrugReactions` method (details can be found [here](doc/IsolateFilter.html#calculateDrugReactions-instance_method)).
+
+_Example SQL Query_
+
+```
+select
+d.name as drug,
+idr.authority as authority,
+idr.publication as publication,
+idr.delivery_mechanism as delivery_mechanism,
+idr.infection_type as infection_type,
+idr.reaction as reaction,
+count(1) as frequency
+from
+ceftaroline_validated_mic_results vmr
+inner join ceftaroline_isolates i on i.id = vmr.isolate_id
+inner join organisms o on i.organism_code = o.organism_code
+inner join drugs d on vmr.drug_id = d.id
+inner join sites s on i.site_code = s.site_code
+left outer join us_census_regions uscr on
+s.state_province = uscr.state_abbreviation
+inner join ceftaroline_isolate_drug_reactions idr on (
+idr.validated_mic_result_id = vmr.id
+)
+where
+  1 = 1
+  and vmr.drug_id in ( 1001 /* Amikacin */,1002 /* AmoxClav */, ... )
+  and (
+    (
+      idr.authority = 'CLSI' and
+      idr.publication = '2015'
+    ) or
+    (
+      idr.authority = 'EUCAST' and
+      idr.publication = '2015'
+    ) or
+    0=1
+  )
+  and i.surveillance_year in ( 2014 )
+  and i.organism_code in ( 'SA' )
+  and s.country in ( 'USA' )
+group by
+d.name,
+idr.authority,
+idr.publication,
+idr.delivery_mechanism,
+idr.infection_type,
+idr.reaction
+order by
+d.name,
+idr.authority,
+idr.publication,
+idr.delivery_mechanism,
+idr.infection_type,
+idr.reaction
+```
+
+_Example Results_
+
+| drug     | authority | publication | delivery_mechanism | infection_type | reactions | frequency |
+| --- | --- | --- | --- | --- | :---: | --- | 
+| AmoxClav | CLSI      | 2015        |                    |                | R         | 3577      |
+| AmoxClav | CLSI      | 2015        |                    |                | S         | 3875      |
+| AmoxClav | EUCAST      | 2015        |                    |                | R         | 3577      |
+| AmoxClav | EUCAST      | 2015        |                    |                | S         | 3875      |
+| ... | ...| ... | ... | ... | ... | ... |
+| Vancomycin | CLSI      | 2015        |                    |                | S         | 7453      |
+| Vancomycin | EUCAST      | 2015        |                    |                | S         | 7453      |
