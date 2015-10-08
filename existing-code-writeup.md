@@ -252,7 +252,7 @@ vmr.edge
 _Example Output_
 
 | drug | mic | edge | frequency |
-| ____ | ___ | ____ | _________ | 
+| ____ | ___ | ____ | _________ |
 | AmoxClav | 1.000000 | -1 | 3865 |
 | AmoxClav | 2.000000| 0 | 104 |
 | AmoxClav | 4.000000| 0 | 142 |
@@ -263,4 +263,6 @@ _Example Output_
 | Vancomycin | 0.500000 | 0 | 1599 |
 | Vancomycin | 1.000000 | 0 | 5779 |
 | Vancomycin | 2.000000 | 0 | 64 |
+
+
 
