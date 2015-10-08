@@ -2,7 +2,7 @@
 
 **ToDo**
 - [x] Overview of MIC, testing and results.
-- [ ] Identify (filter) which isolates should be included in this execution
+- [x] Identify (filter) which isolates should be included in this execution
 - [ ] Demonstrate how the generated sql enforces those filters for attributes that come from each of the possible tables:  isolates, organisms, sites, isolate_attributes:
   * (validated\_mic_results can be used in filters as well but hold off on that)
 - [ ] Document how the drug/mic/edge/count that comes back are stored into `frequency_distribution.rb`, and then how they are normalized in different cases (2 lows, 2 highs) in instances of `frequency_distribution.rb`
@@ -125,9 +125,7 @@ client_category_value: { include: 'MSSA' },
 ```
 
 
-<hr/ >
-
-**Create the filter**
+### Create the filter
 
 To identify the isolates based on the unique combination of attributes we need to instantiate a new IsolateFilter:
 
@@ -141,9 +139,7 @@ Next we have to set the database _prefix_ to select which dataset we should use 
 isolate_filter.setTablePrefix( 'example_' )
 ```
 
-<hr />
-
-**Add attributes and values to the filter**
+### Add attributes and values to the filter
 
 Adding filter criteria to the isolate filter is easy
 
@@ -157,9 +153,7 @@ _Example_
 isolate_filter.setAttributeFilter( year: { include: [ 2014 ] } )
 ```
 
-<hr />
-
-**Calculate Frequency Distributions**
+### Calculate Frequency Distributions
 
 In order to calculate the frequency distribution of MIC results for all isolates matched by the `isolate_filter`, we need to indicate which 
 drugs and breakpoint authorities to include in the analysis:
@@ -217,3 +211,7 @@ isolate_filter.calculateFrequencyDistributions(
 ```
 
 The frequency distribution results are stored within the `isolate_filter.frequency_distribution` instance variable.
+
+### Understanding how `isolate_filter` works
+
+
