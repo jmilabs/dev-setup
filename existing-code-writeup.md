@@ -3,7 +3,7 @@
 **ToDo**
 - [x] Overview of MIC, testing and results.
 - [x] Identify (filter) which isolates should be included in this execution
-- [ ] Demonstrate how the generated sql enforces those filters for attributes that come from each of the possible tables:  isolates, organisms, sites, isolate_attributes:
+- [x] Demonstrate how the generated sql enforces those filters for attributes that come from each of the possible tables:  isolates, organisms, sites, isolate_attributes:
   * (validated\_mic_results can be used in filters as well but hold off on that)
 - [ ] Document how the drug/mic/edge/count that comes back are stored into `frequency_distribution.rb`, and then how they are normalized in different cases (2 lows, 2 highs) in instances of `frequency_distribution.rb`
 - [ ] Document how the `isolate_drug_reactions` data fields:
@@ -267,7 +267,7 @@ _Example Results_
 
 <hr />
 
-To ensure that only the correct isolates are included in the **mic frequency count**, `isolate_filter.rb` a where clause is generated based on the filtered attributes.
+To ensure that only the correct isolates are included in the **mic frequency count**, `isolate_filter.rb` generates a where clause based on the filtered attributes.
 
 For more information see the code docs:
 
@@ -355,7 +355,7 @@ _Example Results_
 | ... | ... | ... |
 | Vancomycin | SA | 7453 |
 
-Now we add the isolate counts to each frequency distribution.
+Now store the results in the frequency distirbution by calling `FrequencyDistribution#addOrganismCodeFrequency `. 
 
 ```
 SQLUtil::getConnection.exec( query ).each{ | row |
@@ -448,3 +448,254 @@ _Example Results_
 | ... | ...| ... | ... | ... | ... | ... |
 | Vancomycin | CLSI      | 2015        |                    |                | S         | 7453      |
 | Vancomycin | EUCAST      | 2015        |                    |                | S         | 7453      |
+
+Now store the results in the frequency distirbution by calling `FrequencyDistribution#addDrugReaction`. 
+
+_**Note:** We are not including MDR as a 'hack' right now. This will be removed in future versions._
+
+```
+SQLUtil::getConnection.exec( query ).each{ | row |
+  fd_key = {
+    filters: @filters,
+    drug: row[ "drug" ],
+    group_by: @group_by,
+    group_by_values: {}
+  }
+  @group_by.each{ | k |
+    fd_key[ :group_by_values ][ k ] = row[ getBareColumnName( k ) ]
+  }
+  fd = @frequency_distributions[ fd_key ]
+  if ( fd.nil? )
+    throw "Trying to add drug reactions to non existent frequency distribution with key #{ fd_key }"
+  end
+  fd.addDrugReaction(
+    row[ "authority" ],
+    row[ "publication" ],
+    row[ "delivery_mechanism" ],
+    row[ "infection_type" ],
+    row[ "reaction" ],
+    row[ "frequency" ]
+  ) unless row[ "delivery_mechanism" ].include?( 'MDR' )
+}
+```
+
+
+#### Step 4. Retrieve drug reactions (resistance) footnotes
+
+This is done by calling the `IsolateFilter#calculateDrugReactions` method (details can be found [here](doc/IsolateFilter.html#calculateDrugReactions-instance_method)).
+
+_Example SQL Query_
+
+```
+select
+d.name as drug,
+idr.authority as authority,
+idr.publication as publication,
+idr.delivery_mechanism as delivery_mechanism,
+idr.infection_type as infection_type,
+idr.footnote as footnote,
+count(1) as frequency
+from
+ceftaroline_validated_mic_results vmr
+inner join ceftaroline_isolates i on i.id = vmr.isolate_id
+inner join organisms o on i.organism_code = o.organism_code
+inner join drugs d on vmr.drug_id = d.id
+inner join sites s on i.site_code = s.site_code
+left outer join us_census_regions uscr on
+s.state_province = uscr.state_abbreviation
+inner join ceftaroline_isolate_drug_reactions idr on (
+idr.validated_mic_result_id = vmr.id
+)
+where
+  1 = 1
+  and idr.footnote is not null
+  and vmr.drug_id in ( 1001 /* Amikacin */,1002 /* AmoxClav */, ...)
+  and (
+    (
+      idr.authority = 'CLSI' and
+      idr.publication = '2015'
+    ) or
+    (
+      idr.authority = 'EUCAST' and
+      idr.publication = '2015'
+    ) or
+    0=1
+  )
+  and i.surveillance_year in ( 2014 )
+  and i.organism_code in ( 'SA' )
+  and s.country in ( 'USA' )
+group by
+d.name,
+idr.authority,
+idr.publication,
+idr.delivery_mechanism,
+idr.infection_type,
+idr.footnote
+order by
+d.name,
+idr.authority,
+idr.publication,
+idr.delivery_mechanism,
+idr.infection_type,
+idr.footnote
+```
+
+_Example Result_
+
+| drug | authority | publication | delivery_mechanism | infection_type | footnote | frequency |    
+| --- | --- | --- | --- | --- | --- | --- |   
+| Tigecycline | CLSI | 2015 | | | Breakpoints from FDA Package Insert revised 12/2014 | 7435 |
+
+Now store the resulting footnotes in the frequency distirbution by calling `FrequencyDistribution#addDrugReactionFootnote `. 
+
+_**Note:** We are not including MDR as a 'hack' right now. This will be removed in future versions._
+
+
+```
+SQLUtil::getConnection.exec( query ).each{ | row |
+  fd_key = {
+    filters: @filters,
+    drug: row[ "drug" ],
+    group_by: @group_by,
+    group_by_values: {}
+  }
+  @group_by.each{ | k |
+    fd_key[ :group_by_values ][ k ] = row[ getBareColumnName( k ) ]
+  }
+  fd = @frequency_distributions[ fd_key ]
+  if ( fd.nil? )
+    throw "Trying to add footnote to non existent frequency distribution with key #{ fd_key }"
+  end
+  fd.addDrugReactionFootnote(
+    row[ "authority" ],
+    row[ "publication" ],
+    row[ "delivery_mechanism" ],
+    row[ "infection_type" ],
+    row[ "footnote" ]
+  ) unless row[ "delivery_mechanism" ].include?( 'MDR' )
+}
+```
+
+#### Step 5. Retrieve drug reactions (resistance) eligible interpretations.
+
+This is done by calling the `IsolateFilter#calculateDrugReactions` method (details can be found [here](doc/IsolateFilter.html#calculateDrugReactions-instance_method)).
+
+```
+# Within IsolateFilter#calculateFrequencyDistributions
+calculateDrugReactionEligibleInterpretations(
+  drugs,
+  breakpoint_authorities,
+  merge_disparate_eligible_interpretations
+)
+```
+
+_Example SQL Query_
+
+```
+select
+d.name as drug,
+idr.authority as authority,
+idr.publication as publication,
+idr.delivery_mechanism as delivery_mechanism,
+idr.infection_type as infection_type,
+idr.eligible_interpretations as eligible_interpretations,
+idr.acceptable_dilutions as acceptable_dilutions,
+count(1) as frequency
+from
+ceftaroline_validated_mic_results vmr
+inner join ceftaroline_isolates i on i.id = vmr.isolate_id
+inner join organisms o on i.organism_code = o.organism_code
+inner join drugs d on vmr.drug_id = d.id
+inner join sites s on i.site_code = s.site_code
+left outer join us_census_regions uscr on
+s.state_province = uscr.state_abbreviation
+inner join ceftaroline_isolate_drug_reactions idr on (
+  idr.validated_mic_result_id = vmr.id
+)
+where
+  1 = 1
+  and vmr.drug_id in ( 1001 /* Amikacin */,1002 /* AmoxClav */, ... )
+  and (
+    (
+      idr.authority = 'CLSI' and
+      idr.publication = '2015'
+    ) or
+    (
+      idr.authority = 'EUCAST' and
+      idr.publication = '2015'
+    ) or
+    0=1
+  )
+  and i.surveillance_year in ( 2014 )
+  and i.organism_code in ( 'SA' )
+  and s.country in ( 'USA' )
+group by
+d.name,
+idr.authority,
+idr.publication,
+idr.delivery_mechanism,
+idr.infection_type,
+idr.eligible_interpretations,
+idr.acceptable_dilutions
+order by
+d.name,
+idr.authority,
+idr.publication,
+idr.delivery_mechanism,
+idr.infection_type,
+idr.eligible_interpretations,
+idr.acceptable_dilutions
+```
+
+_Example Results_
+
+| drug | authority | publication | delivery_mechanism | infection_type | eligible_interpretations | acceptable_dilutions | frequency |   
+| --- | --- | --- | --- | --- | --- | --- | --- | 
+| AmoxClav | CLSI | 2015 | | | S R | | 7452 |
+| AmoxClav | EUCAST | 2015 | | | S R | | 7452 |
+| ... | ... | ... | ... | ... | ... | ... | ... |
+| Vancomycin | EUCAST | 2015 | | | S I R | | 7453 |
+| Vancomycin | EUCAST | 2015 | | | S R | | 7453 |
+
+Now store the resulting footnotes in the frequency distirbution by calling `FrequencyDistribution#addDrugReactionEligibleInterpretations`. 
+
+_**Note:** We are not including MDR as a 'hack' right now. This will be removed in future versions._
+
+
+```
+SQLUtil::getConnection.exec( query ).each{ | row |
+  fd_key = {
+    filters: @filters,
+    drug: row[ "drug" ],
+    group_by: @group_by,
+    group_by_values: {}
+  }
+  @group_by.each{ | k |
+    fd_key[ :group_by_values ][ k ] = row[ getBareColumnName( k ) ]
+  }
+  fd = @frequency_distributions[ fd_key ]
+  if ( fd.nil? )
+    throw "Trying to add eligible_interpretations to non existent frequency distribution with key #{ fd_key }"
+  end
+  fd.addDrugReactionEligibleInterpretations(
+    row[ "authority" ],
+    row[ "publication" ],
+    row[ "delivery_mechanism" ],
+    row[ "infection_type" ],
+    row[ "eligible_interpretations" ],
+    row[ "acceptable_dilutions" ],
+    merge_disparate_eligible_interpretations
+  ) unless row[ "delivery_mechanism" ].include?( 'MDR' )
+}
+```
+
+#### Step 6. Normalize and calculate the frequency distributions 
+
+Now that we have all necessary data loaded into the frequency distribution instances, we need to call the `FrequencyDistribution#normalize_and_calculate` method. 
+
+```
+# Within IsolateFilter#calculateFrequencyDistributions
+@frequency_distributions.each{ | k, fd |
+  fd.normalize_and_calculate
+}
+```
