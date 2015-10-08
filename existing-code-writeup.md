@@ -17,7 +17,14 @@
   are queried for and stored in `drug_reaction_set.rb`
 - [ ] Adapt the `fd_to_csv` / `fd_to_csv_debug methods` to serialize all frequency\_distribution instances returned by an isolate_filter instance into a single nested json/hash structure that contains all known data
 
-## Minimum Inhibitory Concentration 
+## Outline
+
+* [Background](#background)
+* [Overview](#overview)
+	* [1. Retrieve MIC frequency count and create a frequency distribution.](#step-1-get-the-results-of-the-mic-testing-for-each-drug--organism-combination-only-where-the-isolates-of-the-test-match-the-filtering-criteria)
+	* [2. Retrieve a count of organisms included in each frequency distribution](#step-2-get-a-count-of-organisms-included-in-each-frequency-distribution)
+
+## Background 
 
 In microbiology, **Minimum Inhibitory Concentration (MIC)** is the lowest concentration of an antimicrobial that will inhibit the visible growth of a microorganism after overnight incubation. At **JMI Labs**, we several different kinds of tests to identify the MIC for a particular drug and organism combination. These tests include:
 
@@ -42,7 +49,7 @@ We use this wide range of isolates to provide our clients with a normalized freq
 
 <img src="images/staphylococcus_aureus_fd.png" alt="Drawing" width="600px" /> 
 
-## Step 1: Determine which isolates to include in the report
+## Step 1: Overview
 
 Isolates can be filtered and grouped by any combination of the following attributes:
 
@@ -657,7 +664,7 @@ _Example Results_
 | Vancomycin | EUCAST | 2015 | | | S I R | | 7453 |
 | Vancomycin | EUCAST | 2015 | | | S R | | 7453 |
 
-Now store the resulting footnotes in the frequency distirbution by calling `FrequencyDistribution#addDrugReactionEligibleInterpretations`. 
+Now store the resulting eligible interpretations in the frequency distirbution by calling `FrequencyDistribution#addDrugReactionEligibleInterpretations`. 
 
 _**Note:** We are not including MDR as a 'hack' right now. This will be removed in future versions._
 
