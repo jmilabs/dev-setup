@@ -212,6 +212,55 @@ isolate_filter.calculateFrequencyDistributions(
 
 The frequency distribution results are stored within the `isolate_filter.frequency_distribution` instance variable.
 
-### Understanding how `isolate_filter` works
+### Understanding how `isolate_filter.rb` works
 
+`isolate_filter.rb` works by building complex sql queries consisting of **inner joins** and **where clauses** to filer the selected isolate attributes.
+
+#### Step 1. Get the results of the MIC testing for each drug / organism combination, _only_ where the isolates of the test match the filtering criteria. 
+
+_Example_
+
+```
+select
+d.name as drug,
+vmr.mic as mic,
+vmr.edge as edge,
+count(1) as frequency
+from
+ceftaroline_validated_mic_results vmr
+inner join ceftaroline_isolates i on i.id = vmr.isolate_id
+inner join organisms o on i.organism_code = o.organism_code
+inner join drugs d on vmr.drug_id = d.id
+inner join sites s on i.site_code = s.site_code
+left outer join us_census_regions uscr on
+s.state_province = uscr.state_abbreviation
+where
+  1 = 1
+  and vmr.drug_id in ( 1001 /* Amikacin */,1002 /* AmoxClav */, ... )
+  and i.surveillance_year in ( 2014 )
+  and i.organism_code in ( 'SA' )
+  and s.country in ( 'USA' )
+group by
+d.name,
+vmr.mic,
+vmr.edge
+order by
+d.name,
+vmr.mic,
+vmr.edge
+```
+_Example Output_
+
+|drug|mic|edge|frequency|
+|____|___|____|_________|
+|AmoxClav|1.000000|-1|3865|
+|AmoxClav|2.000000|0|104|
+|AmoxClav|4.000000|0|142|
+|AmoxClav|8.000000|0|685|
+|AmoxClav|8.000000|1|2656|
+|...|...|...|...|
+|Vancomycin|0.250000|0|11|
+|Vancomycin|0.500000|0|1599|
+|Vancomycin|1.000000|0|5779|
+|Vancomycin|2.000000|0|64|
 
