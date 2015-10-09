@@ -706,3 +706,49 @@ Now that we have all necessary data loaded into the frequency distribution insta
   fd.normalize_and_calculate
 }
 ```
+
+# Frequency Distribution
+
+The frequency distribution is a range of mic results per drug sorted by count per ordinal. The starting and stopping point of the range is determined by finding the lowest <= and > highest tested dilutions.
+
+"How frequently did a dilution occur."
+
+ - Finds the lowest and highest tested dilutions
+ - Find the highest 'low' edge and lowest 'high' edge
+ - Counts the number of edge occurrences
+ - process mic results found between the highest 'low' and lowest 'high'
+ - process the normalized data to produce the mic50, mic90 and range per drug and based on filters set in isolate_filter.rb (see Step 1 of isolate filters for example)
+ 
+### Mic50 and Mic90
+- The Mic50 is the dilution at which 50% of isolates are susceptable.
+
+- The Mic90 is the dilution at which 90% of isolates are susceptable.
+
+The Mic50 and Mic90 values are calculated at the end of the normalize_and_calculate method when calculating the cumulatives. Cumulatives are created by itterating over the unnormalized data 
+
+ 
+### Normalization
+
+normalize_and_calculate
+
+Normalization does not occour if no low or high edge exists. Because on the physical panel there is only one "bottom" or "top" on a given panel any values above or below that edge will get rolled into the highest/lowest edge value.
+
+For example only one bottom in any given panel so 1 and <= 1 get rolled into <= 1
+
+
+#### Crosstabs
+
+Crosstabs is a 2 dimensional representation of normalization for finding outliers in data that could represent errors in the process. It is an array of buckets sorted by drug to mic value counts for 2 drugs.
+
+It gives us the ability to create counts of how many times "drug1 was value 4", "drug2 was 8", etc and graph it on a X,Y chart.
+
+TODO add img of crosstabs generated output
+
+
+#### Eligible interpretations
+
+TODO
+
+## Understanding how frequency_distribution.rb and Normalization work
+
+TODO
